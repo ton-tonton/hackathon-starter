@@ -1,13 +1,14 @@
-FROM node:6.5-slim
+FROM node:6-slim
 
-ENV APP_HOME /data/hackathon
-RUN mkdir -p /data/hackathon
-WORKDIR $APP_HOME
+COPY . /starter
+COPY package.json /starter/package.json
+COPY .env.example /starter/.env.example
 
-ADD . $APP_HOME/
-RUN rm -rf node_modules/
-RUN npm install
+WORKDIR /starter
 
-EXPOSE 3000
+ENV NODE_ENV production
+RUN yarn install --production
 
-CMD npm run start
+CMD ["npm","start"]
+
+EXPOSE 8888
